@@ -1,0 +1,27 @@
+.border-left-radius {
+  border-top-left-radius: 1.5rem !important;
+  border-bottom-left-radius: 1.5rem !important;
+}
+.border-right-radius {
+  border-top-right-radius: 1.5rem !important;
+  border-bottom-right-radius: 1.5rem !important;
+}
+
+.input-box,
+.input-box:focus {
+  border: 0rem !important;
+  outline: 0rem !important;
+  box-shadow: none !important;
+}
+
+/* Masonry Galary */
+
+.row_cont {
+  padding: 1rem;
+  column-count: 3;
+}
+
+.row_cont img {
+  margin: 0.4rem;
+  width: 100%;
+}

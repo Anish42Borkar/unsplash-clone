@@ -1,0 +1,128 @@
+// you can open the bootstrap.scss module and check any available variables.
+$primary: #fff;
+$secondary: #111;
+$success: #efeeef;
+$info: #7854e4;
+$warning: #b8c924;
+$danger: #d62518;
+$light: #f8f9fa;
+$dark: #343a40;
+
+//custom color to be mapped
+$accent: #da6d25;
+
+// this is used to map colors. change accordingly.
+$theme-colors: (
+  primary: $primary,
+  secondary: $secondary,
+  success: $success,
+  info: $info,
+  warning: $warning,
+  danger: $danger,
+  light: $light,
+  dark: $dark,
+  // add any additional color below
+  accent: $accent,
+  // now bg-accent,btn-accent,etc.. can be called
+);
+
+$line-height-base: 1.5;
+$line-height-sm: 1.25;
+$line-height-xsm: 0.6rem;
+$line-height-lg: 2;
+
+// Override default variables before the import
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";
+@import "bootstrap/scss/utilities/api";
+
+// sizing
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "width": (
+      property: width,
+      class: w,
+      values: (
+        7: 2rem,
+        10: 4rem,
+        25: 25%,
+        30: 30%,
+        50: 50%,
+        75: 75%,
+        100: 100%,
+        auto: auto,
+      ),
+    ),
+    "max-width": (
+      property: max-width,
+      class: mw,
+      values: (
+        100: 100%,
+      ),
+    ),
+    "viewport-width": (
+      property: width,
+      class: vw,
+      values: (
+        100: 100vw,
+      ),
+    ),
+    "min-viewport-width": (
+      property: min-width,
+      class: min-vw,
+      values: (
+        100: 100vw,
+      ),
+    ),
+    "height": (
+      property: height,
+      class: h,
+      values: (
+        25: 25%,
+        50: 50%,
+        75: 75%,
+        100: 100%,
+        auto: auto,
+      ),
+    ),
+    "max-height": (
+      property: max-height,
+      class: mh,
+      values: (
+        100: 100%,
+      ),
+    ),
+    "viewport-height": (
+      property: height,
+      class: vh,
+      values: (
+        100: 100vh,
+      ),
+    ),
+    "min-viewport-height": (
+      property: min-height,
+      class: min-vh,
+      values: (
+        100: 100vh,
+      ),
+    ),
+    "line-height": (
+      property: line-height,
+      class: lh,
+      values: (
+        1: 1,
+        sm: $line-height-sm,
+        xsm: $line-height-xsm,
+        base: $line-height-base,
+        lg: $line-height-lg,
+      ),
+    ),
+  )
+);
+
+// Import Bootstrap and its default variables
+@import "../node_modules/bootstrap/scss/bootstrap";
