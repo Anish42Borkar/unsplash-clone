@@ -34,7 +34,6 @@ const Home: FC = (): JSX.Element => {
     if (e[0].isIntersecting) {
       state.count += 1;
       counter += 1;
-
       infiniteScrollUpdate();
     }
   }
@@ -46,7 +45,6 @@ const Home: FC = (): JSX.Element => {
     filterImgUrls = response.data.map(
       (data: Record<any, any>) => data.urls.regular
     );
-
     setState((prev) => ({
       ...prev,
       images: [...prev.images, ...filterImgUrls],
