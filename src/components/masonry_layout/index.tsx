@@ -8,7 +8,7 @@ const MasonryLayout: FC<MasonryLayoutProps> = ({
   images = [],
 }): JSX.Element => {
   return (
-    <div className="w-100">
+    <div className="w-100 min-vh-100">
       <div className="row_cont">
         {images.map((val, key) => {
           return (
