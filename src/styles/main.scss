@@ -80,10 +80,16 @@ $utilities: map-merge(
     ),
     "height": (
       property: height,
-      class: h,
+      cursor class: h,
       values: (
+        7: 2rem,
+        8: 3rem,
+        9: 3.6rem,
+        10: 4rem,
+        20: 20%,
         25: 25%,
         50: 50%,
+        70: 70%,
         75: 75%,
         100: 100%,
         auto: auto,
@@ -119,6 +125,13 @@ $utilities: map-merge(
         xsm: $line-height-xsm,
         base: $line-height-base,
         lg: $line-height-lg,
+      ),
+    ),
+    "cursor": (
+      property: cursor,
+      class: cursor,
+      values: (
+        pointer: pointer,
       ),
     ),
   )
