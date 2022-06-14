@@ -25,7 +25,7 @@ const SearchBox: FC<SearchBoxProps> = ({ makeRounded = true }): JSX.Element => {
         <Form.Control
           className={`${
             makeRounded && "border-right-radius"
-          } bg-success input-box p-0`}
+          } bg-success input-box p-0 `}
           aria-label="Default"
           aria-describedby="inputGroup-sizing-default"
           placeholder="Search"
