@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counter from "./reducers/counter";
 import imagesList from "./reducers/imagesList";
+import topics from "./reducers/topics";
 
 export const store = configureStore({
-  reducer: { counter, imagesList },
+  reducer: { imagesList, topics },
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
