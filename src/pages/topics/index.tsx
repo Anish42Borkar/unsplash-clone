@@ -38,7 +38,6 @@ const Topics = () => {
   }
 
   const getTopicImages = async (id?: string): Promise<void> => {
-    console.log(id);
     try {
       const response = await axiosInstance.get("topics/" + id + "/photos", {
         params: { page: state.count },
@@ -47,7 +46,6 @@ const Topics = () => {
         ...prev,
         images: [...prev.images, ...response.data],
       }));
-      console.log(response.data);
     } catch (e) {}
   };
 
