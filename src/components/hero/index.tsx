@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 
 // components
@@ -7,12 +7,20 @@ import SearchBox from "../search_box";
 // utility
 import axiosInstance from "../../utility/axiosInstance";
 
+type StateProps = {
+  bgUrl: string;
+};
+
 const initialImageUrl =
-  "https://images.unsplash.com/photo-1654034085709-a3981e5718ca?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDR8Ym84alFLVGFFMFl8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60";
+  "https://images.unsplash.com/photo-1654868739497-ee031a3d7088?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80";
 
 const Hero: FC = (): JSX.Element => {
+  const [state, setState] = useState<StateProps>({
+    bgUrl: "",
+  });
+
   const styles: Record<any, string> = {
-    backgroundImage: `url(${initialImageUrl})`,
+    backgroundImage: `url(${state.bgUrl ?? ""})`,
     height: "100%",
     width: "100%",
     backgroundClip: "outline",
@@ -26,6 +34,25 @@ const Hero: FC = (): JSX.Element => {
     backgroundColor: "rgba(23, 23, 23, 0.33)",
     // opacity: "0.5",
   };
+
+  const changeBgHero = async (): Promise<void> => {
+    try {
+      const response: Record<any, any> = await axiosInstance.get(
+        "photos/random",
+        { params: { topics: "bo8jQKTaE0Y", w: 1080 } }
+      );
+      setState(
+        (prev): StateProps => ({ ...prev, bgUrl: response.data.urls.regular })
+      );
+      console.log(response.data.urls.regular, "hero");
+    } catch (e) {
+      setState((prev): StateProps => ({ ...prev, bgUrl: initialImageUrl }));
+    }
+  };
+
+  useEffect((): void => {
+    changeBgHero();
+  }, []);
 
   return (
     <div className="w-100 vh-100" style={styles}>
