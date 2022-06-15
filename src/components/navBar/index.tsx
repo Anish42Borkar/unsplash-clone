@@ -43,6 +43,7 @@ const NavBar = (): JSX.Element => {
       style={{ zIndex: "30" }}
       className="d-flex flex-column m-0 w-100 position-sticky top-0 bg-primary "
     >
+      {/* search box */}
       <div className=" d-flex justify-content-between p-0 m-0 mr-0 w-100">
         <div className="d-none d-md-flex justify-content-start align-items-center w-75   p-0 m-0">
           <SearchBar />
@@ -57,7 +58,7 @@ const NavBar = (): JSX.Element => {
         </div>
         {/* <Navbar.Toggle className="bg-info w-100" /> */}
 
-        <div className="fs-6 w-25 justify-content-around align-items-center  m-0 p-0 d-none d-md-flex">
+        <div className="fs-6 w-25 justify-content-around align-items-center   m-0 p-0 d-none d-md-flex">
           <Navbar.Text>Advertise</Navbar.Text>
           <Navbar.Text>Blog</Navbar.Text>
           <div className="">
@@ -67,8 +68,10 @@ const NavBar = (): JSX.Element => {
           </div>
         </div>
       </div>
-      <div className=" w-100 h-8 d-flex justify-content-around align-items-center ">
-        <div className="w-20 m-2 d-none d-md-block  ">
+
+      {/* Editorial */}
+      <div className=" w-100 h-8 d-flex justify-content-around align-items-center  ">
+        <div className="w-20 m-2 d-none d-md-block  p-2">
           <NavLink
             to="/"
             className={({ isActive }) => {
@@ -87,7 +90,9 @@ const NavBar = (): JSX.Element => {
             <Navbar.Text className=" ">Following</Navbar.Text>
           </NavLink>
         </div>
-        <div className="scrollmenu_cont position-relative overflow-auto px-3  w-75 w-md-75">
+
+        {/* topics list */}
+        <div className="scrollmenu_cont position-relative overflow-auto px-3  w-100 w-md-80 ">
           <div ref={scrollmenuCont} className="scrollmenu w-auto   ">
             <NavLink
               to="/"
@@ -111,18 +116,20 @@ const NavBar = (): JSX.Element => {
               <Navbar.Text className="">Following</Navbar.Text>
             </NavLink>
 
-            {topicList.map((item: any, key: number) => {
+            {topicList?.map((item: any, key: number) => {
               return (
-                <NavLink
-                  to={`task/${item.id}`}
-                  className={({ isActive }) => {
-                    return `p-2 fs-6 ${isActive && "border-bottom  border-5"} `;
-                  }}
-                >
-                  <Navbar.Text key={key} className="">
-                    {item.title}
-                  </Navbar.Text>
-                </NavLink>
+                <div key={key}>
+                  <NavLink
+                    to={`topics/${item.id}`}
+                    className={({ isActive }) => {
+                      return `p-2 fs-6 ${
+                        isActive && "border-bottom  border-5"
+                      } `;
+                    }}
+                  >
+                    <Navbar.Text className="">{item.title}</Navbar.Text>
+                  </NavLink>
+                </div>
               );
             })}
           </div>

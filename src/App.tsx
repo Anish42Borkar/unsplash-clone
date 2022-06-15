@@ -7,6 +7,7 @@ import NavBar from "./components/navBar";
 import axiosInstance from "./utility/axiosInstance";
 import { setTopicList } from "./redux/reducers/topics";
 
+import "./styles/main.scss";
 import "./styles/App.css";
 
 function App() {
