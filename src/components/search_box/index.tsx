@@ -25,7 +25,7 @@ const SearchBox: FC<SearchBoxProps> = ({ makeRounded = true }): JSX.Element => {
 
   return (
     <>
-      <div className="">
+      <div className="position-relative">
         <InputGroup className="w-100 p-0">
           <InputGroup.Text
             id="inputGroup-sizing-default "
