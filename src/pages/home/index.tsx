@@ -1,4 +1,6 @@
 import { FC, useEffect, useState, useRef, RefObject, Ref } from "react";
+// @ts-ignore
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 // utility
 import axiosInstance from "../../utility/axiosInstance";
 // components
@@ -65,7 +67,16 @@ const Home: FC = (): JSX.Element => {
   return (
     <div>
       <Hero />
-      <MasonryLayout images={state.images} />
+      {/* <MasonryLayout images={state.images} /> */}
+      <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
+        <Masonry>
+          {state.images.map((item: string, key: number) => {
+            return (
+              <img className="p-2" src={item} key={key} alt="" srcSet="" />
+            );
+          })}
+        </Masonry>
+      </ResponsiveMasonry>
       <Spinner ref={spinnerRef} />
     </div>
   );
