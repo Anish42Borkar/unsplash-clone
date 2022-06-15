@@ -87,8 +87,8 @@ const NavBar = (): JSX.Element => {
             <Navbar.Text className=" ">Following</Navbar.Text>
           </NavLink>
         </div>
-        <div className="scrollmenu_cont position-relative overflow-auto">
-          <div ref={scrollmenuCont} className="scrollmenu w-auto mx-4  ">
+        <div className="scrollmenu_cont position-relative overflow-auto px-3  w-75 w-md-75">
+          <div ref={scrollmenuCont} className="scrollmenu w-auto   ">
             <NavLink
               to="/"
               className={({ isActive }) => {
