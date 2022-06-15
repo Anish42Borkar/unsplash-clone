@@ -15,8 +15,6 @@ type StateProps = {
   images: string[];
 };
 
-let counter = 0;
-
 const Home: FC = (): JSX.Element => {
   const [state, setState] = useState<StateProps>({
     images: [],
@@ -35,7 +33,6 @@ const Home: FC = (): JSX.Element => {
   function observerCallback<IntersectionObserverCallback>(e: any): any {
     if (e[0].isIntersecting) {
       state.count += 1;
-      counter += 1;
       infiniteScrollUpdate();
     }
   }
@@ -62,7 +59,8 @@ const Home: FC = (): JSX.Element => {
   };
 
   useEffect(() => {
-    counter++;
+    window.scrollTo(0, 0);
+    state.images = [];
     infiniteScrollUpdate();
     if (spinnerRef.current) {
       observer.observe(spinnerRef.current as Element);
@@ -76,7 +74,9 @@ const Home: FC = (): JSX.Element => {
     <div>
       <Hero />
       {/* <MasonryLayout images={state.images} /> */}
-      <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
+      <ResponsiveMasonry
+        columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3, 1080: 4 }}
+      >
         <Masonry>
           {state.images?.map((item: string, key: number) => {
             return (

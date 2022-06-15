@@ -49,6 +49,20 @@ div.scrollmenu {
   z-index: 10;
 } */
 
+.search_results {
+  z-index: 6;
+  background-color: rgba(82, 82, 82, 0.6);
+  padding-top: 3rem;
+  padding-left: 2rem;
+  /* height: fit-content; */
+  /* margin-left: -5rem !important; */
+  position: absolute;
+  top: 0.4rem;
+  left: 0rem;
+  min-width: 100%;
+  min-height: 100vh;
+}
+
 /* Masonry Galary */
 
 .row_cont {
@@ -78,8 +92,14 @@ div.scrollmenu {
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
+  .w-md-60 {
+    width: 60% !important;
+  }
   .w-md-80 {
     width: 80% !important;
+  }
+  .w-md-100 {
+    width: 100% !important;
   }
   .row_cont {
     column-count: 3;
