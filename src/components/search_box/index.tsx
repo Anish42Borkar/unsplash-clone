@@ -51,7 +51,7 @@ const SearchBox: FC<SearchBoxProps> = ({ makeRounded = true }): JSX.Element => {
             onBlur={onFocus}
             aria-label="Default"
             aria-describedby="inputGroup-sizing-default"
-            placeholder="Search"
+            placeholder="Search free high-resolution photos"
           />
         </InputGroup>
         {/* <div

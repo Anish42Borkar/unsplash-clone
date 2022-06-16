@@ -39,7 +39,7 @@ const Hero: FC = (): JSX.Element => {
     try {
       const response: Record<any, any> = await axiosInstance.get(
         "photos/random",
-        { params: { topics: "bo8jQKTaE0Y", w: 1080 } }
+        { params: { topics: "bo8jQKTaE0Y", w: 1080, h: 720 } }
       );
       setState(
         (prev): StateProps => ({ ...prev, bgUrl: response.data.urls.regular })
