@@ -156,11 +156,13 @@ function SearchBar(): JSX.Element {
   return (
     <>
       <div className="w-10 me-3 ms-1">
-        <Image className="w-100" src={UnsplashIcon} rounded />
+        <NavLink to="/">
+          <Image className="w-100" src={UnsplashIcon} rounded />
+        </NavLink>
       </div>
-      <Navbar.Brand href="#home" className="w-100">
+      <div className="w-100">
         <SearchBox />
-      </Navbar.Brand>
+      </div>
     </>
   );
 }

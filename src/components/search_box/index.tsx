@@ -1,4 +1,5 @@
 import { FC, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { Image, Container } from "react-bootstrap";
@@ -10,9 +11,16 @@ export interface SearchBoxProps {
   makeRounded?: boolean;
 }
 
+type FormHookProps = {
+  name: string;
+};
+
 const SearchBox: FC<SearchBoxProps> = ({ makeRounded = true }): JSX.Element => {
   const searchBoxRef = useRef<HTMLInputElement>(null);
   const searchListRef = useRef<HTMLDivElement>(null);
+
+  const navigate = useNavigate();
+
   // console.log(searchBoxRef.current?.focus());
   const onFocus = () => {
     if (document.activeElement === searchBoxRef.current) {
@@ -21,6 +29,10 @@ const SearchBox: FC<SearchBoxProps> = ({ makeRounded = true }): JSX.Element => {
       searchListRef.current?.classList.add("d-none");
     }
     // console.log(searchListRef.current);
+  };
+
+  const onSubmit = async (data: string): Promise<void> => {
+    navigate("/search", { state: { str: data } });
   };
 
   return (
@@ -36,31 +48,27 @@ const SearchBox: FC<SearchBoxProps> = ({ makeRounded = true }): JSX.Element => {
             </Container>
           </InputGroup.Text>
           <Form.Control
-            ref={searchBoxRef}
+            autoComplete="off"
+            // ref={searchBoxRef}
             className={`${
               makeRounded && "border-right-radius"
             } bg-success input-box p-0 `}
-            onFocus={onFocus}
-            onChange={() => {
-              if (document.activeElement === searchBoxRef.current) {
-                console.log("element has focus");
-              } else {
-                console.log("element does NOT have focus");
+            onKeyPress={(e: any) => {
+              if (e.key === "Enter") {
+                onSubmit(e.target?.value);
               }
             }}
-            onBlur={onFocus}
+            // onFocus={onFocus}
+            // onBlur={onFocus}
             aria-label="Default"
             aria-describedby="inputGroup-sizing-default"
             placeholder="Search free high-resolution photos"
           />
         </InputGroup>
-        {/* <div
-          ref={searchListRef}
-          className="search_results d-none position-absolute top-0 bottom-0 mt-6 w-100 w-md-80 mh-10 bg-success shadow-lg rounded  "
-        ></div> */}
-        <div ref={searchListRef} className="d-none search_results  mt-6 ">
-          <div className=" w-90 w-md-60 min-h-14 bg-success shadow-lg mb-6  rounded  "></div>
-        </div>
+
+        {/* <div ref={searchListRef} className="d-none search_results  mt-6 ">
+          <div className=" w-90 w-md-60 min-h-7 bg-success shadow-lg mb-6  rounded  "></div>
+        </div> */}
       </div>
     </>
   );
