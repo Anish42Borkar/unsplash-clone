@@ -21,7 +21,7 @@ let storeCurrentIndex: number;
 const Home: FC = (): JSX.Element => {
   const [state, setState] = useState<StateProps>({
     images: [],
-    count: 0,
+    count: 1,
     modal: false,
   });
   const spinnerRef = useRef<HTMLDivElement>(null);
@@ -77,31 +77,35 @@ const Home: FC = (): JSX.Element => {
     };
   }, []);
 
+  useEffect(() => {}, [storeCurrentIndex]);
+
   return (
     <div>
       <Hero />
       {/* <MasonryLayout images={state.images} /> */}
-      <ResponsiveMasonry
-        columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3, 1080: 4 }}
-      >
-        <Masonry>
-          {state.images?.map((item: any, key: number) => {
-            return (
-              <img
-                className="p-2 cursor-zoom-in"
-                src={item.urls?.regular as string}
-                key={key}
-                alt=""
-                srcSet=""
-                onClick={() => {
-                  storeCurrentIndex = key;
-                  toggleModal();
-                }}
-              />
-            );
-          })}
-        </Masonry>
-      </ResponsiveMasonry>
+      <div className="mh-100">
+        <ResponsiveMasonry
+          columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3, 1080: 4 }}
+        >
+          <Masonry>
+            {state.images?.map((item: any, key: number) => {
+              return (
+                <img
+                  className="p-2 cursor-zoom-in"
+                  src={item.urls?.regular as string}
+                  key={key}
+                  alt=""
+                  srcSet=""
+                  onClick={() => {
+                    storeCurrentIndex = key;
+                    toggleModal();
+                  }}
+                />
+              );
+            })}
+          </Masonry>
+        </ResponsiveMasonry>
+      </div>
 
       <CModal
         open={state.modal}
@@ -109,6 +113,7 @@ const Home: FC = (): JSX.Element => {
         imageListObj={state.images}
         currentIndex={storeCurrentIndex}
       />
+
       <Spinner ref={spinnerRef} />
     </div>
   );

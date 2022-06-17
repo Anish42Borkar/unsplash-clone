@@ -23,7 +23,7 @@ const Topics = () => {
   const spinnerRef = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<StateProps>({
     images: [],
-    count: 0,
+    count: 1,
     modal: false,
   });
 

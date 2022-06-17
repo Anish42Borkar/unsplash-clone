@@ -1,6 +1,10 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+
+// icons
+import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
+import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 
 export interface CModalProps {
   open: boolean;
@@ -9,12 +13,42 @@ export interface CModalProps {
   currentIndex: number;
 }
 
+let valHolder: number;
+
 const CModal: FC<CModalProps> = ({
   open,
   onHide,
-  currentIndex,
+  currentIndex = 0,
   imageListObj,
 }): JSX.Element => {
+  const [arrowControler, setArrowControler] = useState(currentIndex);
+
+  const goToPreviusImage = (): void => {
+    // console.log(valHolder);
+    // valHolder = valHolder - 1;
+    if (arrowControler > 0) {
+      setArrowControler((prev) => prev - 1);
+    }
+  };
+
+  const goToNextImage = (): void => {
+    // console.log(valHolder);
+    // valHolder = valHolder + 1;
+    if (arrowControler < imageListObj.length - 1) {
+      setArrowControler((prev) => prev + 1);
+    }
+  };
+
+  // useEffect(() => {
+  //   console.log(currentIndex);
+  //   valHolder = currentIndex;
+  // }, []);
+
+  useEffect(() => {
+    console.log("render");
+    setArrowControler((prev) => currentIndex);
+  }, [currentIndex]);
+
   return (
     <Modal
       show={open}
@@ -24,7 +58,6 @@ const CModal: FC<CModalProps> = ({
       // dialogClassName="position-relative"
       centered
     >
-      {/* <div className="">div</div> */}
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
           {/* Modal heading */}
@@ -32,10 +65,25 @@ const CModal: FC<CModalProps> = ({
       </Modal.Header>
 
       <Modal.Body>
+        <div
+          className="position-absolute top-50 start-0  transition-middle  cursor-pointer"
+          onClick={goToPreviusImage}
+        >
+          {" "}
+          <ArrowBackIosRoundedIcon style={{ fontSize: 44 }} />{" "}
+        </div>
+
+        <div
+          className="position-absolute top-50 end-0 transition-middle cursor-pointer"
+          onClick={goToNextImage}
+        >
+          {" "}
+          <ArrowForwardIosRoundedIcon style={{ fontSize: 44 }} />{" "}
+        </div>
         <div className="modal_img_cont">
           <img
             className=""
-            src={imageListObj[currentIndex]?.urls.regular}
+            src={imageListObj[arrowControler]?.urls.regular}
             alt=""
             srcSet=""
           />

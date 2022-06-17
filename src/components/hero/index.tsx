@@ -25,7 +25,7 @@ const Hero: FC = (): JSX.Element => {
     width: "100%",
     backgroundClip: "outline",
     backgroundRepeat: "no-repeat",
-    backgroundSize: "100% 100%",
+    backgroundSize: "cover",
   };
 
   const transboxStyle = {
