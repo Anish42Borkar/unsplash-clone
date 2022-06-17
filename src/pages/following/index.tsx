@@ -1,5 +1,3 @@
-import React from "react";
-
 const Following = () => {
   return (
     <div className="mt-7 ps-5">

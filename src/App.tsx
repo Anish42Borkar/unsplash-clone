@@ -14,10 +14,14 @@ function App() {
   const dispatch = useDispatch();
 
   const getListOfTopics = async (): Promise<void> => {
-    const response: Record<any, any> = await axiosInstance
-      .get("topics")
-      .catch((e) => e.response);
-    dispatch(setTopicList(response.data));
+    try {
+      const response: Record<any, any> = await axiosInstance
+        .get("topics")
+        .catch((e) => e.response);
+      dispatch(setTopicList(response.data));
+    } catch (e) {
+      console.log("something went wrong");
+    }
   };
 
   useEffect(() => {

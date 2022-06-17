@@ -21,16 +21,6 @@ const SearchBox: FC<SearchBoxProps> = ({ makeRounded = true }): JSX.Element => {
 
   const navigate = useNavigate();
 
-  // console.log(searchBoxRef.current?.focus());
-  const onFocus = () => {
-    if (document.activeElement === searchBoxRef.current) {
-      searchListRef.current?.classList.remove("d-none");
-    } else {
-      searchListRef.current?.classList.add("d-none");
-    }
-    // console.log(searchListRef.current);
-  };
-
   const onSubmit = async (data: string): Promise<void> => {
     navigate("/search", { state: { str: data } });
   };
@@ -49,7 +39,6 @@ const SearchBox: FC<SearchBoxProps> = ({ makeRounded = true }): JSX.Element => {
           </InputGroup.Text>
           <Form.Control
             autoComplete="off"
-            // ref={searchBoxRef}
             className={`${
               makeRounded && "border-right-radius"
             } bg-success input-box p-0 `}
@@ -58,17 +47,11 @@ const SearchBox: FC<SearchBoxProps> = ({ makeRounded = true }): JSX.Element => {
                 onSubmit(e.target?.value);
               }
             }}
-            // onFocus={onFocus}
-            // onBlur={onFocus}
             aria-label="Default"
             aria-describedby="inputGroup-sizing-default"
             placeholder="Search free high-resolution photos"
           />
         </InputGroup>
-
-        {/* <div ref={searchListRef} className="d-none search_results  mt-6 ">
-          <div className=" w-90 w-md-60 min-h-7 bg-success shadow-lg mb-6  rounded  "></div>
-        </div> */}
       </div>
     </>
   );

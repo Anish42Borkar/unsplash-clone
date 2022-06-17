@@ -25,9 +25,7 @@ const Home: FC = (): JSX.Element => {
   const spinnerRef = useRef<HTMLDivElement>(null);
 
   const options: IntersectionObserverInit | undefined = {
-    // root: null,
     rootMargin: "2000px",
-    // threshold: 0.25,
   };
 
   const observer = new IntersectionObserver(observerCallback, options);
@@ -78,7 +76,6 @@ const Home: FC = (): JSX.Element => {
   return (
     <div>
       <Hero />
-      {/* <MasonryLayout images={state.images} /> */}
       <div className="mh-100">
         <ResponsiveMasonry
           columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3, 1080: 4 }}

@@ -5,7 +5,6 @@ import Navbar from "react-bootstrap/Navbar";
 import Image from "react-bootstrap/Image";
 import { Button } from "react-bootstrap";
 //utility
-import axiosInstance from "../../utility/axiosInstance";
 import { getTopicsList } from "../../redux/reducers/topics";
 // components
 import SearchBox from "../search_box";

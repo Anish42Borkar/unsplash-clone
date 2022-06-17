@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Params, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axiosInstance from "../../utility/axiosInstance";
 // @ts-ignore
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
@@ -28,9 +28,7 @@ const Topics = () => {
   });
 
   const options: IntersectionObserverInit | undefined = {
-    // root: null,
     rootMargin: "2000px",
-    // threshold: 0.25,
   };
 
   const observer = new IntersectionObserver(observerCallback, options);
