@@ -13,6 +13,8 @@ export interface CModalProps {
   currentIndex: number;
 }
 
+let valHolder: number;
+
 const CModal: FC<CModalProps> = ({
   open,
   onHide,
