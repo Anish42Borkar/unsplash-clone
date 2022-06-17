@@ -7,12 +7,17 @@ import Spinner from "../../components/spinner";
 //utility
 import axiosInstance from "../../utility/axiosInstance";
 
+//components
+import CModal from "../../components/CModal";
+
 type StateProps = {
   count: number;
   images: string[];
+  modal: boolean;
 };
 
 let storeLocation: string;
+let storeCurrentIndex: number;
 
 const Search: FC = (): JSX.Element => {
   const location: Record<any, any> = useLocation();
@@ -20,6 +25,7 @@ const Search: FC = (): JSX.Element => {
   const [state, setState] = useState<StateProps>({
     images: [],
     count: 0,
+    modal: false,
   });
   const spinnerRef = useRef<HTMLDivElement>(null);
 
@@ -55,6 +61,10 @@ const Search: FC = (): JSX.Element => {
     } catch (e) {}
   };
 
+  const toggleModal = (): void => {
+    setState((prev) => ({ ...prev, modal: !prev.modal }));
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
     state.images = [];
@@ -67,6 +77,7 @@ const Search: FC = (): JSX.Element => {
     }
   }, [location.state?.str]);
   useEffect(() => {
+    toggleModal;
     return () => {
       if (spinnerRef.current) observer.unobserve(spinnerRef.current as Element);
     };
@@ -81,16 +92,27 @@ const Search: FC = (): JSX.Element => {
           {state.images?.map((item: any, key: number) => {
             return (
               <img
-                className="p-2"
+                className="p-2 cursor-zoom-in"
                 src={item.urls?.regular as string}
                 key={key}
                 alt=""
                 srcSet=""
+                onClick={() => {
+                  storeCurrentIndex = key;
+                  toggleModal();
+                }}
               />
             );
           })}
         </Masonry>
       </ResponsiveMasonry>
+      <CModal
+        open={state.modal}
+        onHide={toggleModal}
+        imageListObj={state.images}
+        currentIndex={storeCurrentIndex}
+      />
+
       <Spinner ref={spinnerRef} />
     </>
   );

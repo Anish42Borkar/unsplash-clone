@@ -76,11 +76,32 @@ div.scrollmenu {
   width: 100%;
 }
 
+.modal_img_cont {
+  margin: 0 auto;
+  width: 45rem;
+  height: 40rem;
+}
+
+.modal_img_cont img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.arrow_left {
+  position: absolute;
+  left: -10rem;
+}
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   .row_cont {
     column-count: 1;
   }
+  /* .modal_img_cont {
+    width: 20rem;
+    height: 20rem;
+  } */
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -88,6 +109,10 @@ div.scrollmenu {
   .row_cont {
     column-count: 2;
   }
+  /* .modal_img_cont {
+    width: 30rem;
+    height: 30rem;
+  } */
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -111,6 +136,11 @@ div.scrollmenu {
   .row_cont {
     column-count: 4;
   }
+
+  /* .modal_img_cont {
+    width: 40rem;
+    height: 40rem;
+  } */
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
