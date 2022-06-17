@@ -46,7 +46,9 @@ const Hero: FC = (): JSX.Element => {
       );
       console.log(response.data.urls.regular, "hero");
     } catch (e) {
-      setState((prev): StateProps => ({ ...prev, bgUrl: initialImageUrl }));
+      setState(
+        (prev): StateProps => ({ ...prev, bgUrl: initialImageUrl ?? "" })
+      );
     }
   };
 

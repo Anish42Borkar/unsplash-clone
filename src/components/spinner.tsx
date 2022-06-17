@@ -1,9 +1,4 @@
-import { FC, forwardRef, Ref, RefObject } from "react";
-
-// export interface SpinnerProps {
-//   ref: any;
-//   props?: any;
-// }
+import { forwardRef } from "react";
 
 const Spinner = forwardRef((props: any, ref: any): JSX.Element => {
   return (

@@ -13,8 +13,6 @@ export interface CModalProps {
   currentIndex: number;
 }
 
-let valHolder: number;
-
 const CModal: FC<CModalProps> = ({
   open,
   onHide,
@@ -24,25 +22,16 @@ const CModal: FC<CModalProps> = ({
   const [arrowControler, setArrowControler] = useState(currentIndex);
 
   const goToPreviusImage = (): void => {
-    // console.log(valHolder);
-    // valHolder = valHolder - 1;
     if (arrowControler > 0) {
       setArrowControler((prev) => prev - 1);
     }
   };
 
   const goToNextImage = (): void => {
-    // console.log(valHolder);
-    // valHolder = valHolder + 1;
     if (arrowControler < imageListObj.length - 1) {
       setArrowControler((prev) => prev + 1);
     }
   };
-
-  // useEffect(() => {
-  //   console.log(currentIndex);
-  //   valHolder = currentIndex;
-  // }, []);
 
   useEffect(() => {
     console.log("render");
@@ -55,7 +44,6 @@ const CModal: FC<CModalProps> = ({
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       onHide={onHide}
-      // dialogClassName="position-relative"
       centered
     >
       <Modal.Header closeButton>

@@ -13,6 +13,7 @@ const Routers = (): JSX.Element => {
         <Route path="following" element={<Following />} />
         <Route path="topics/:id" element={<Topics />} />
         <Route path="Search" element={<Search />} />
+        <Route path="*" element={<Home />} />
       </Routes>
     </>
   );
