@@ -8,8 +8,6 @@ import Hero from "../../components/hero";
 import Spinner from "../../components/spinner";
 import CModal from "../../components/CModal";
 
-let filterImgUrls: string[] = [];
-
 type StateProps = {
   count: number;
   images: string[];
@@ -46,9 +44,7 @@ const Home: FC = (): JSX.Element => {
       const response = await axiosInstance
         .get("photos", { params: { page: state.count } })
         .catch((e: Record<any, any>) => e.response);
-      // filterImgUrls = response.data.map(
-      //   (data: Record<any, any>) => data.urls.regular
-      // );
+
       setState((prev) => ({
         ...prev,
         images: [...prev.images, ...response.data],
