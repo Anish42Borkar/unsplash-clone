@@ -24,7 +24,7 @@ const Search: FC = (): JSX.Element => {
 
   const [state, setState] = useState<StateProps>({
     images: [],
-    count: 0,
+    count: 1,
     modal: false,
   });
   const spinnerRef = useRef<HTMLDivElement>(null);
@@ -68,7 +68,7 @@ const Search: FC = (): JSX.Element => {
   useEffect(() => {
     window.scrollTo(0, 0);
     state.images = [];
-    state.count = 0;
+    state.count = 1;
     storeLocation = location.state?.str as string;
     onSubmit(location.state?.str);
 
