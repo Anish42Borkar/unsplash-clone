@@ -113,7 +113,6 @@ const Home: FC = (): JSX.Element => {
         imageListObj={state.images}
         currentIndex={storeCurrentIndex}
       />
-
       <Spinner ref={spinnerRef} />
     </div>
   );
