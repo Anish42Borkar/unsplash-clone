@@ -4,6 +4,7 @@ import axiosInstance from "../../utility/axiosInstance";
 // @ts-ignore
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Spinner from "../../components/spinner";
+import CModal from "../../components/CModal";
 
 type ParamTypes = {
   id: string;
@@ -12,7 +13,10 @@ type ParamTypes = {
 type StateProps = {
   count: number;
   images: string[];
+  modal: boolean;
 };
+
+let storeCurrentIndex: number;
 
 const Topics = () => {
   const { id } = useParams<ParamTypes>();
@@ -20,6 +24,7 @@ const Topics = () => {
   const [state, setState] = useState<StateProps>({
     images: [],
     count: 0,
+    modal: false,
   });
 
   const options: IntersectionObserverInit | undefined = {
@@ -49,6 +54,10 @@ const Topics = () => {
     } catch (e) {}
   };
 
+  const toggleModal = (): void => {
+    setState((prev) => ({ ...prev, modal: !prev.modal }));
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
     state.images = [];
@@ -67,16 +76,26 @@ const Topics = () => {
           {state.images?.map((item: any, key: number) => {
             return (
               <img
-                className="p-2"
+                className="p-2 cursor-zoom-in"
                 src={item.urls.regular}
                 key={key}
                 alt=""
                 srcSet=""
+                onClick={() => {
+                  storeCurrentIndex = key;
+                  toggleModal();
+                }}
               />
             );
           })}
         </Masonry>
       </ResponsiveMasonry>
+      <CModal
+        open={state.modal}
+        onHide={toggleModal}
+        imageListObj={state.images}
+        currentIndex={storeCurrentIndex}
+      />
       <Spinner ref={spinnerRef} />
     </div>
   );

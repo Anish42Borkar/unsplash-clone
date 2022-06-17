@@ -6,18 +6,23 @@ import axiosInstance from "../../utility/axiosInstance";
 // components
 import Hero from "../../components/hero";
 import Spinner from "../../components/spinner";
+import CModal from "../../components/CModal";
 
 let filterImgUrls: string[] = [];
 
 type StateProps = {
   count: number;
   images: string[];
+  modal: boolean;
 };
+
+let storeCurrentIndex: number;
 
 const Home: FC = (): JSX.Element => {
   const [state, setState] = useState<StateProps>({
     images: [],
     count: 0,
+    modal: false,
   });
   const spinnerRef = useRef<HTMLDivElement>(null);
 
@@ -41,12 +46,12 @@ const Home: FC = (): JSX.Element => {
       const response = await axiosInstance
         .get("photos", { params: { page: state.count } })
         .catch((e: Record<any, any>) => e.response);
-      filterImgUrls = response.data.map(
-        (data: Record<any, any>) => data.urls.regular
-      );
+      // filterImgUrls = response.data.map(
+      //   (data: Record<any, any>) => data.urls.regular
+      // );
       setState((prev) => ({
         ...prev,
-        images: [...prev.images, ...filterImgUrls],
+        images: [...prev.images, ...response.data],
       }));
     } catch (e) {
       setState((prev) => ({
@@ -55,6 +60,9 @@ const Home: FC = (): JSX.Element => {
       }));
     } finally {
     }
+  };
+  const toggleModal = (): void => {
+    setState((prev) => ({ ...prev, modal: !prev.modal }));
   };
 
   useEffect(() => {
@@ -77,13 +85,30 @@ const Home: FC = (): JSX.Element => {
         columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3, 1080: 4 }}
       >
         <Masonry>
-          {state.images?.map((item: string, key: number) => {
+          {state.images?.map((item: any, key: number) => {
             return (
-              <img className="p-2" src={item} key={key} alt="" srcSet="" />
+              <img
+                className="p-2 cursor-zoom-in"
+                src={item.urls?.regular as string}
+                key={key}
+                alt=""
+                srcSet=""
+                onClick={() => {
+                  storeCurrentIndex = key;
+                  toggleModal();
+                }}
+              />
             );
           })}
         </Masonry>
       </ResponsiveMasonry>
+
+      <CModal
+        open={state.modal}
+        onHide={toggleModal}
+        imageListObj={state.images}
+        currentIndex={storeCurrentIndex}
+      />
       <Spinner ref={spinnerRef} />
     </div>
   );

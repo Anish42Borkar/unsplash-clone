@@ -115,6 +115,8 @@ $utilities: map-merge(
       property: max-height,
       class: mh,
       values: (
+        40: 40%,
+        60: 60%,
         100: 100%,
       ),
     ),
@@ -165,6 +167,7 @@ $utilities: map-merge(
       class: cursor,
       values: (
         pointer: pointer,
+        zoom-in:zoom-in,
       ),
     ),
 
