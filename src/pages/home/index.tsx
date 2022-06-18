@@ -1,4 +1,4 @@
-import { FC, useEffect, useState, useRef } from "react";
+import { FC, useEffect, useState, useRef, MouseEventHandler } from "react";
 // @ts-ignore
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 // utility
@@ -7,6 +7,10 @@ import axiosInstance from "../../utility/axiosInstance";
 import Hero from "../../components/hero";
 import Spinner from "../../components/spinner";
 import CModal from "../../components/CModal";
+//icons
+import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import  Plus from "../../assets/icons/plus.svg";
 
 type StateProps = {
   count: number;
@@ -59,6 +63,28 @@ const Home: FC = (): JSX.Element => {
     setState((prev) => ({ ...prev, modal: !prev.modal }));
   };
 
+  const handleDownload = async (item: string) => {
+    const response = await axiosInstance.get(item);
+    const res = await fetch(response.data.url);
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "download";
+    a.click();
+  };
+
+  const trigerModal = (e: any, key: number,trigger:boolean): void => {
+    
+    if (trigger) {
+      console.log(e.currentTarget,"inside");
+      storeCurrentIndex = key;
+      toggleModal();
+    }
+    
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
     state.images = [];
@@ -66,6 +92,7 @@ const Home: FC = (): JSX.Element => {
     if (spinnerRef.current) {
       observer.observe(spinnerRef.current as Element);
     }
+
     return () => {
       if (spinnerRef.current) observer.unobserve(spinnerRef.current as Element);
     };
@@ -77,23 +104,57 @@ const Home: FC = (): JSX.Element => {
     <div>
       <Hero />
       <div className="mh-100">
-        <ResponsiveMasonry
-          columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3, 1080: 4 }}
-        >
+        <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
           <Masonry>
             {state.images?.map((item: any, key: number) => {
               return (
-                <img
-                  className="p-2 cursor-zoom-in"
-                  src={item.urls?.regular as string}
-                  key={key}
-                  alt=""
-                  srcSet=""
-                  onClick={() => {
-                    storeCurrentIndex = key;
-                    toggleModal();
-                  }}
-                />
+                <div className="img_cont" key={key}>
+                  <img
+                    className="p-2 cursor-zoom-in"
+                    src={item.urls?.regular as string}
+                    key={key}
+                    alt=""
+                    srcSet=""
+                    onClick={(e) => {
+                      trigerModal(e, key,true);
+                    }}
+                  />
+                  <div
+                  
+                    className="img_overlay m-2"
+                    onClick={(e) => {
+                      trigerModal(e, key,true);
+                    }}
+                  >
+                    <div className="w-100 h-100 position-relative">
+                      <div className="position-absolute top-0 px-3 py-4 d-flex justify-content-end align-items-center w-100">
+                        <div className=" bg-success p-2 rounded cursor-pointer">
+                          <FavoriteIcon />
+                        </div>
+                        <div className=" bg-success p-2 ms-2 rounded cursor-pointer">
+                          <img src={Plus} alt="" srcSet="" className="w-6" /> 
+                        </div>
+                      </div>
+
+                      <div className="position-absolute bottom-0 px-3 py-4 d-flex justify-content-between align-items-center w-100">
+                        <p className=" align-middle text-success m-0">
+                          {item.user.first_name +
+                            " " +
+                            (item.user.last_name ?? "")}
+                        </p>
+
+                        <div
+                          className=" bg-success p-2 rounded cursor-pointer"
+                          onClick={() => {
+                            handleDownload(item.links.download_location);
+                          }}
+                        >
+                          <FileDownloadOutlinedIcon />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               );
             })}
           </Masonry>

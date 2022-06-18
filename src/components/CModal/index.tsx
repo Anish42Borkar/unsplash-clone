@@ -46,9 +46,9 @@ const CModal: FC<CModalProps> = ({
       onHide={onHide}
       centered
     >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          {/* Modal heading */}
+      <Modal.Header closeButton >
+        <Modal.Title id="contained-modal-title-vcenter ">
+          {/* <div className="bg-primary w-20">jhvgh</div> */}
         </Modal.Title>
       </Modal.Header>
 
@@ -77,9 +77,9 @@ const CModal: FC<CModalProps> = ({
           />
         </div>
       </Modal.Body>
-      <Modal.Footer>
+      {/* <Modal.Footer>
         <Button onClick={onHide}>Close</Button>
-      </Modal.Footer>
+      </Modal.Footer> */}
     </Modal>
   );
 };
