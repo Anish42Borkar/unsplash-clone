@@ -58,8 +58,12 @@ const NavBar = (): JSX.Element => {
         {/* <Navbar.Toggle className="bg-info w-100" /> */}
 
         <div className="fs-6 w-25 justify-content-around align-items-center   m-0 p-0 d-none d-md-flex">
-          <Navbar.Text>Advertise</Navbar.Text>
-          <Navbar.Text>Blog</Navbar.Text>
+          <a href="https://unsplash.com/advertise">
+            <Navbar.Text>Advertise</Navbar.Text>
+          </a>
+          <a href="https://unsplash.com/blog/">
+            <Navbar.Text>Blog</Navbar.Text>
+          </a>
           <div className="">
             <Button className="bg-success ">
               <Navbar.Text>Submit a Photo</Navbar.Text>
@@ -154,12 +158,12 @@ const NavBar = (): JSX.Element => {
 function SearchBar(): JSX.Element {
   return (
     <>
-      <div className="w-10 me-3 ms-1">
+      <div className="w-10 me-3 ms-1 p-3">
         <NavLink to="/">
           <Image className="w-100" src={UnsplashIcon} rounded />
         </NavLink>
       </div>
-      <div className="w-100">
+      <div className="w-100 ">
         <SearchBox />
       </div>
     </>
