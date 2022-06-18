@@ -154,8 +154,7 @@ const Home: FC = (): JSX.Element => {
                       </div>
                     </div>
                   </div>
-                </div>
-              );
+                </div> );
             })}
           </Masonry>
         </ResponsiveMasonry>
