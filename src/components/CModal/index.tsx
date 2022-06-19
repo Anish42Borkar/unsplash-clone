@@ -1,10 +1,17 @@
 import { FC, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Modal from "react-bootstrap/Modal";
+//util
+import axiosInstance from "../../utility/axiosInstance";
 
 // icons
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import Plus from "../../assets/icons/plus.svg";
 
 export interface CModalProps {
   open: boolean;
@@ -13,8 +20,6 @@ export interface CModalProps {
   currentIndex: number;
 }
 
-let valHolder: number;
-
 const CModal: FC<CModalProps> = ({
   open,
   onHide,
@@ -22,6 +27,9 @@ const CModal: FC<CModalProps> = ({
   imageListObj,
 }): JSX.Element => {
   const [arrowControler, setArrowControler] = useState(currentIndex);
+  const [state, setState] = useState({
+    zoom: false,
+  });
 
   const goToPreviusImage = (): void => {
     if (arrowControler > 0) {
@@ -35,8 +43,25 @@ const CModal: FC<CModalProps> = ({
     }
   };
 
+  const handleDownload = async (e: any, item: string) => {
+    e.stopPropagation();
+    const response = await axiosInstance.get(item);
+    const res = await fetch(response.data.url);
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "download";
+    a.click();
+  };
+
+  const zoomToggle = () => {
+    setState((prev) => ({ ...prev, zoom: !prev.zoom }));
+  };
+
   useEffect(() => {
-    console.log("render");
+    state.zoom = false;
     setArrowControler((prev) => currentIndex);
   }, [currentIndex]);
 
@@ -48,11 +73,42 @@ const CModal: FC<CModalProps> = ({
       onHide={onHide}
       centered
     >
-      <Modal.Header closeButton >
-        <Modal.Title id="contained-modal-title-vcenter ">
-          {/* <div className="bg-primary w-20">jhvgh</div> */}
-        </Modal.Title>
-      </Modal.Header>
+      <div className="w-100 p-2 d-flex justify-content-end">
+        <div
+          className="fav bg-success p-2 rounded cursor-pointer"
+          onClick={(e: any) => {
+            e.stopPropagation();
+            e.target.classList.toggle("text-danger");
+          }}
+        >
+          <FavoriteIcon />
+        </div>
+        <div className=" bg-success p-2 mx-2 rounded cursor-pointer">
+          <img src={Plus} alt="" srcSet="" className="w-6" />
+        </div>
+
+        <ButtonGroup
+          size="sm"
+          className=" me-5"
+          onClick={(e) => {
+            handleDownload(e, imageListObj[arrowControler].links.download_location);
+          }}
+        >
+          <Button className="border">Download</Button>
+          <Button className="w-7 border d-flex justify-content-center align-items-center">
+            <FileDownloadOutlinedIcon />
+          </Button>
+        </ButtonGroup>
+        <div
+          className=" position-absolute end-0 mx-1 mt-1  rounded cursor-pointer"
+          onClick={(e: any) => {
+            e.stopPropagation();
+            onHide();
+          }}
+        >
+          <CloseRoundedIcon style={{ fontSize: 36 }} />
+        </div>
+      </div>
 
       <Modal.Body>
         <div
@@ -70,12 +126,13 @@ const CModal: FC<CModalProps> = ({
           {" "}
           <ArrowForwardIosRoundedIcon style={{ fontSize: 44 }} />{" "}
         </div>
-        <div className="modal_img_cont">
+        <div className={`modal_img_cont ${state.zoom && "zoomed"}`}>
           <img
             className=""
             src={imageListObj[arrowControler]?.urls.regular}
             alt=""
             srcSet=""
+            onClick={zoomToggle}
           />
         </div>
       </Modal.Body>
