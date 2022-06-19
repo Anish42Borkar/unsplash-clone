@@ -1,10 +1,17 @@
 import { FC, useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 // @ts-ignore
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Spinner from "../../components/spinner";
 //utility
 import axiosInstance from "../../utility/axiosInstance";
+import checkIfIdExist from "../../utility/checkIfIdExist";
+import {
+  getWishListData,
+  setWishList,
+  removeFromWishList,
+} from "../../redux/reducers/wishList";
 //components
 import CModal from "../../components/CModal";
 //icons
@@ -30,10 +37,12 @@ const Search: FC = (): JSX.Element => {
     modal: false,
   });
   const spinnerRef = useRef<HTMLDivElement>(null);
+  const dispatch = useDispatch();
+  const wishListData = useSelector(getWishListData);
 
   const options: IntersectionObserverInit | undefined = {
     // root: null,
-    rootMargin: "2000px",
+    rootMargin: "80%",
     // threshold: 0.25,
   };
 
@@ -67,7 +76,7 @@ const Search: FC = (): JSX.Element => {
     setState((prev) => ({ ...prev, modal: !prev.modal }));
   };
 
-  const handleDownload = async (e:any,item: string) => {
+  const handleDownload = async (e: any, item: string) => {
     e.stopPropagation();
     const response = await axiosInstance.get(item);
     const res = await fetch(response.data.url);
@@ -124,11 +133,19 @@ const Search: FC = (): JSX.Element => {
                   }}
                 >
                   <div className="w-100 h-100 position-relative">
-                  <div className="position-absolute top-0 px-3 py-4 d-flex justify-content-end align-items-center w-100">
+                    <div className="position-absolute top-0 px-3 py-4 d-flex justify-content-end align-items-center w-100">
                       <div
-                        className="fav bg-success p-2 rounded cursor-pointer"
+                        className={`fav bg-success p-2 rounded cursor-pointer ${
+                          checkIfIdExist(wishListData.list, item.id) &&
+                          "text-danger"
+                        } `}
                         onClick={(e: any) => {
                           e.stopPropagation();
+                          if (e.target.classList.contains("text-danger")) {
+                            dispatch(removeFromWishList(item.id));
+                          } else {
+                            dispatch(setWishList(item));
+                          }
                           e.target.classList.toggle("text-danger");
                         }}
                       >
@@ -148,8 +165,8 @@ const Search: FC = (): JSX.Element => {
 
                       <div
                         className=" bg-success p-2 rounded cursor-pointer"
-                        onClick={(e:any) => {
-                          handleDownload(e,item.urls.regular);
+                        onClick={(e: any) => {
+                          handleDownload(e, item.urls.regular);
                         }}
                       >
                         <FileDownloadOutlinedIcon />

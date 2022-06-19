@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import imagesList from "./reducers/imagesList";
 import topics from "./reducers/topics";
+import wishList from "./reducers/wishList";
 
 export const store = configureStore({
-  reducer: { imagesList, topics },
+  reducer: { imagesList, topics, wishList },
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

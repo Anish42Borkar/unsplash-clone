@@ -1,9 +1,16 @@
 import { FC, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Modal from "react-bootstrap/Modal";
 //util
 import axiosInstance from "../../utility/axiosInstance";
+import checkIfIdExist from "../../utility/checkIfIdExist";
+import {
+  getWishListData,
+  setWishList,
+  removeFromWishList,
+} from "../../redux/reducers/wishList";
 
 // icons
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
@@ -26,6 +33,8 @@ const CModal: FC<CModalProps> = ({
   currentIndex = 0,
   imageListObj,
 }): JSX.Element => {
+  const wishListData = useSelector(getWishListData);
+  const dispatch = useDispatch();
   const [arrowControler, setArrowControler] = useState(currentIndex);
   const [state, setState] = useState({
     zoom: false,
@@ -75,9 +84,19 @@ const CModal: FC<CModalProps> = ({
     >
       <div className="w-100 p-2 d-flex justify-content-end">
         <div
-          className="fav bg-success p-2 rounded cursor-pointer"
+          className={`fav bg-success p-2 rounded cursor-pointer ${
+            checkIfIdExist(
+              wishListData.list,
+              imageListObj[arrowControler]?.id
+            ) && "text-danger"
+          }`}
           onClick={(e: any) => {
             e.stopPropagation();
+            if (e.target.classList.contains("text-danger")) {
+              dispatch(removeFromWishList(imageListObj[arrowControler].id));
+            } else {
+              dispatch(setWishList(imageListObj[arrowControler]));
+            }
             e.target.classList.toggle("text-danger");
           }}
         >
@@ -91,7 +110,10 @@ const CModal: FC<CModalProps> = ({
           size="sm"
           className=" me-5"
           onClick={(e) => {
-            handleDownload(e, imageListObj[arrowControler].links.download_location);
+            handleDownload(
+              e,
+              imageListObj[arrowControler].links.download_location
+            );
           }}
         >
           <Button className="border">Download</Button>
