@@ -57,7 +57,7 @@ const Hero: FC = (): JSX.Element => {
   }, []);
 
   return (
-    <div className="w-100 vh-100" style={styles}>
+    <div className="w-100 vh-100 vh-md-60" style={styles}>
       <div className="transbox d-flex position-relative " style={transboxStyle}>
         <Container className="text-primary   position-absolute top-50 start-50 translate-middle">
           <p className="fs-1 text-success">Unsplash</p>
