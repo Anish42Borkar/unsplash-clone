@@ -10,6 +10,7 @@ import CModal from "../../components/CModal";
 //icons
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import Plus from "../../assets/icons/plus.svg";
 
 type StateProps = {
   count: number;
@@ -66,9 +67,17 @@ const Search: FC = (): JSX.Element => {
     setState((prev) => ({ ...prev, modal: !prev.modal }));
   };
 
-  const handleDownload = (item: string) => {
-    //item.url = ""https://unsplash.com/photos/yC-Yzbqy7PY""
-    window.open(item, "_blank");
+  const handleDownload = async (e:any,item: string) => {
+    e.stopPropagation();
+    const response = await axiosInstance.get(item);
+    const res = await fetch(response.data.url);
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "download";
+    a.click();
   };
 
   useEffect(() => {
@@ -115,9 +124,18 @@ const Search: FC = (): JSX.Element => {
                   }}
                 >
                   <div className="w-100 h-100 position-relative">
-                    <div className="position-absolute top-0 px-3 py-4 d-flex justify-content-end align-items-center w-100">
-                      <div className=" bg-success p-2 rounded cursor-pointer">
+                  <div className="position-absolute top-0 px-3 py-4 d-flex justify-content-end align-items-center w-100">
+                      <div
+                        className="fav bg-success p-2 rounded cursor-pointer"
+                        onClick={(e: any) => {
+                          e.stopPropagation();
+                          e.target.classList.toggle("text-danger");
+                        }}
+                      >
                         <FavoriteIcon />
+                      </div>
+                      <div className=" bg-success p-2 ms-2 rounded cursor-pointer">
+                        <img src={Plus} alt="" srcSet="" className="w-6" />
                       </div>
                     </div>
 
@@ -130,8 +148,8 @@ const Search: FC = (): JSX.Element => {
 
                       <div
                         className=" bg-success p-2 rounded cursor-pointer"
-                        onClick={() => {
-                          handleDownload(item.urls.regular);
+                        onClick={(e:any) => {
+                          handleDownload(e,item.urls.regular);
                         }}
                       >
                         <FileDownloadOutlinedIcon />
