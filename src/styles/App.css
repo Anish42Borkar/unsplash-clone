@@ -152,7 +152,7 @@ div.scrollmenu {
   }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1200px) {
   .vh-md-60 {
     height: 60vh !important;
   }
