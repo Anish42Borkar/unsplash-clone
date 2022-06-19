@@ -1,12 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import axiosInstance from "../../utility/axiosInstance";
+import { useDispatch, useSelector } from "react-redux";
 // @ts-ignore
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+
+// utility
+import axiosInstance from "../../utility/axiosInstance";
+import checkIfIdExist from "../../utility/checkIfIdExist";
+import {
+  getWishListData,
+  setWishList,
+  removeFromWishList,
+} from "../../redux/reducers/wishList";
 //components
 import Spinner from "../../components/spinner";
 import CModal from "../../components/CModal";
-//icons
 //icons
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -27,6 +35,10 @@ let storeCurrentIndex: number;
 const Topics = () => {
   const { id } = useParams<ParamTypes>();
   const spinnerRef = useRef<HTMLDivElement>(null);
+
+  const dispatch = useDispatch();
+  const wishListData = useSelector(getWishListData);
+
   const [state, setState] = useState<StateProps>({
     images: [],
     count: 1,
@@ -34,7 +46,7 @@ const Topics = () => {
   });
 
   const options: IntersectionObserverInit | undefined = {
-    rootMargin: "2000px",
+    rootMargin: "80%",
   };
 
   const observer = new IntersectionObserver(observerCallback, options);
@@ -87,7 +99,7 @@ const Topics = () => {
     };
   }, [id]);
   return (
-    <div>
+    <div className="">
       <ResponsiveMasonry
         columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3, 1080: 4 }}
       >
@@ -116,9 +128,17 @@ const Topics = () => {
                   <div className="w-100 h-100 position-relative">
                     <div className="position-absolute top-0 px-3 py-4 d-flex justify-content-end align-items-center w-100">
                       <div
-                        className="fav bg-success p-2 rounded cursor-pointer"
+                        className={`fav bg-success p-2 rounded cursor-pointer ${
+                          checkIfIdExist(wishListData.list, item.id) &&
+                          "text-danger"
+                        } `}
                         onClick={(e: any) => {
                           e.stopPropagation();
+                          if (e.target.classList.contains("text-danger")) {
+                            dispatch(removeFromWishList(item.id));
+                          } else {
+                            dispatch(setWishList(item));
+                          }
                           e.target.classList.toggle("text-danger");
                         }}
                       >

@@ -6,6 +6,7 @@ import Image from "react-bootstrap/Image";
 import { Button, Offcanvas } from "react-bootstrap";
 //utility
 import { getTopicsList } from "../../redux/reducers/topics";
+import { getWishListData } from "../../redux/reducers/wishList";
 // components
 import SearchBox from "../search_box";
 // images and icons
@@ -18,6 +19,7 @@ const NavBar = (): JSX.Element => {
   const [show, setShow] = useState(false);
 
   const topicList = useSelector(getTopicsList);
+  const wishListData = useSelector(getWishListData);
   const scrollmenuCont = useRef<HTMLDivElement>(null);
 
   const leftArrowOnClick = (): void => {
@@ -74,9 +76,14 @@ const NavBar = (): JSX.Element => {
               <Navbar.Text>Blog</Navbar.Text>
             </a>
             <div className="">
-              <Button className="bg-success ">
-                <Navbar.Text>Submit a Photo</Navbar.Text>
-              </Button>
+              <NavLink to="/wishlist">
+                <Button className="bg-success ">
+                  <Navbar.Text className=" me-1">Wishlist</Navbar.Text>
+                  <span className="badge bg-danger">
+                    {wishListData.counter}
+                  </span>
+                </Button>
+              </NavLink>
             </div>
           </div>
         </div>
@@ -168,15 +175,20 @@ const NavBar = (): JSX.Element => {
         <Offcanvas.Body>
           <div className="fs-6 justify-content-start align-items-start text-dark  m-0 p-0  d-flex flex-column">
             <a href="https://unsplash.com/advertise" className="m-2">
-              <Navbar.Text className = "text-dark m-3 ">Advertise</Navbar.Text>
+              <Navbar.Text className="text-dark m-3 ">Advertise</Navbar.Text>
             </a>
             <a href="https://unsplash.com/blog/" className="m-2">
-              <Navbar.Text className = "text-dark m-3  ">Blog</Navbar.Text>
+              <Navbar.Text className="text-dark m-3  ">Blog</Navbar.Text>
             </a>
             <div className="">
-              <Button className="bg-success ">
-                <Navbar.Text className = "text-dark m-3 ">Submit a Photo</Navbar.Text>
-              </Button>
+              <NavLink to="/wishlist">
+                <Button className="bg-success ">
+                  <Navbar.Text className="text-dark m-3 ">Wishlist</Navbar.Text>
+                  <span className="badge bg-danger">
+                    {wishListData.counter}
+                  </span>
+                </Button>
+              </NavLink>
             </div>
           </div>
         </Offcanvas.Body>
