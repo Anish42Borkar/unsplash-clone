@@ -152,6 +152,12 @@ div.scrollmenu {
   }
 }
 
+@media only screen and (max-width: 768px) {
+  .vh-md-60 {
+    height: 60vh !important;
+  }
+}
+
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
   .w-md-60 {
@@ -163,6 +169,7 @@ div.scrollmenu {
   .w-md-100 {
     width: 100% !important;
   }
+
   .row_cont {
     column-count: 3;
   }
