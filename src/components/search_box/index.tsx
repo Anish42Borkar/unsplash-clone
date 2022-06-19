@@ -1,4 +1,4 @@
-import { FC, useRef, useEffect } from "react";
+import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -11,16 +11,9 @@ export interface SearchBoxProps {
   makeRounded?: boolean;
 }
 
-type FormHookProps = {
-  name: string;
-};
-
 const SearchBox: FC<SearchBoxProps> = ({ makeRounded = true }): JSX.Element => {
-  const searchBoxRef = useRef<HTMLInputElement>(null);
-  const searchListRef = useRef<HTMLDivElement>(null);
 
   const navigate = useNavigate();
-
   const onSubmit = async (data: string): Promise<void> => {
     navigate("/search", { state: { str: data } });
   };
@@ -49,7 +42,7 @@ const SearchBox: FC<SearchBoxProps> = ({ makeRounded = true }): JSX.Element => {
             }}
             aria-label="Default"
             aria-describedby="inputGroup-sizing-default"
-            placeholder="Search free high-resolution photos"
+            placeholder={`${window.innerWidth < 519 ? "Search" :"Search free high-resolution photos" }`}
           />
         </InputGroup>
       </div>

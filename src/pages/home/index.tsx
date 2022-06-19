@@ -10,7 +10,7 @@ import CModal from "../../components/CModal";
 //icons
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import  Plus from "../../assets/icons/plus.svg";
+import Plus from "../../assets/icons/plus.svg";
 
 type StateProps = {
   count: number;
@@ -27,6 +27,7 @@ const Home: FC = (): JSX.Element => {
     modal: false,
   });
   const spinnerRef = useRef<HTMLDivElement>(null);
+  const downloadBtnRef = useRef<HTMLDivElement>(null);
 
   const options: IntersectionObserverInit | undefined = {
     rootMargin: "2000px",
@@ -63,7 +64,8 @@ const Home: FC = (): JSX.Element => {
     setState((prev) => ({ ...prev, modal: !prev.modal }));
   };
 
-  const handleDownload = async (item: string) => {
+  const handleDownload = async (e: any, item: string) => {
+    e.stopPropagation();
     const response = await axiosInstance.get(item);
     const res = await fetch(response.data.url);
     const blob = await res.blob();
@@ -75,14 +77,9 @@ const Home: FC = (): JSX.Element => {
     a.click();
   };
 
-  const trigerModal = (e: any, key: number,trigger:boolean): void => {
-    
-    if (trigger) {
-      console.log(e.currentTarget,"inside");
-      storeCurrentIndex = key;
-      toggleModal();
-    }
-    
+  const trigerModal = (e: any, key: number): void => {
+    storeCurrentIndex = key;
+    toggleModal();
   };
 
   useEffect(() => {
@@ -116,23 +113,28 @@ const Home: FC = (): JSX.Element => {
                     alt=""
                     srcSet=""
                     onClick={(e) => {
-                      trigerModal(e, key,true);
+                      trigerModal(e, key);
                     }}
                   />
                   <div
-                  
                     className="img_overlay m-2"
                     onClick={(e) => {
-                      trigerModal(e, key,true);
+                      trigerModal(e, key);
                     }}
                   >
                     <div className="w-100 h-100 position-relative">
                       <div className="position-absolute top-0 px-3 py-4 d-flex justify-content-end align-items-center w-100">
-                        <div className=" bg-success p-2 rounded cursor-pointer">
+                        <div
+                          className="fav bg-success p-2 rounded cursor-pointer"
+                          onClick={(e: any) => {
+                            e.stopPropagation();
+                            e.target.classList.toggle("text-danger");
+                          }}
+                        >
                           <FavoriteIcon />
                         </div>
                         <div className=" bg-success p-2 ms-2 rounded cursor-pointer">
-                          <img src={Plus} alt="" srcSet="" className="w-6" /> 
+                          <img src={Plus} alt="" srcSet="" className="w-6" />
                         </div>
                       </div>
 
@@ -144,9 +146,10 @@ const Home: FC = (): JSX.Element => {
                         </p>
 
                         <div
+                          ref={downloadBtnRef}
                           className=" bg-success p-2 rounded cursor-pointer"
-                          onClick={() => {
-                            handleDownload(item.links.download_location);
+                          onClick={(e) => {
+                            handleDownload(e, item.links.download_location);
                           }}
                         >
                           <FileDownloadOutlinedIcon />
@@ -154,7 +157,8 @@ const Home: FC = (): JSX.Element => {
                       </div>
                     </div>
                   </div>
-                </div> );
+                </div>
+              );
             })}
           </Masonry>
         </ResponsiveMasonry>

@@ -80,6 +80,13 @@ div.scrollmenu {
   margin: 0 auto;
   width: 45rem;
   height: 40rem;
+  cursor: zoom-in;
+}
+
+.modal_img_cont.zoomed{
+  width: 100%;
+  height: 100%;
+  cursor: zoom-out;
 }
 
 .modal_img_cont img {
@@ -117,6 +124,10 @@ div.scrollmenu {
 .arrow_left {
   position: absolute;
   left: -10rem;
+}
+
+.fav > *{
+  pointer-events: none;
 }
 
 /* Extra small devices (phones, 600px and down) */
