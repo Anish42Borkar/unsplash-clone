@@ -58,10 +58,17 @@ const Wishlist: FC = (): JSX.Element => {
     toggleModal();
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setState((prev) => ({ ...prev, images: wishListData.list }));
+  }, [wishListData.list]);
 
   return (
     <div>
+      {wishListData.list.length < 1 && (
+        <div className="position-absolute top-50 start-50  translate-middle fs-1 fs-bold">
+          Wishlist is empty
+        </div>
+      )}
       <div className="mh-100">
         <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
           <Masonry>
