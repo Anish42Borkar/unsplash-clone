@@ -78,7 +78,7 @@ const NavBar = (): JSX.Element => {
             <div className="">
               <NavLink to="/wishlist">
                 <Button className="bg-success ">
-                  <Navbar.Text className=" me-1">Wishlist</Navbar.Text>
+                  <Navbar.Text className=" me-1">Favourite</Navbar.Text>
                   <span className="badge bg-danger">
                     {wishListData.counter}
                   </span>
@@ -182,8 +182,10 @@ const NavBar = (): JSX.Element => {
             </a>
             <div className="">
               <NavLink to="/wishlist">
-                <Button className="bg-success ">
-                  <Navbar.Text className="text-dark m-3 ">Wishlist</Navbar.Text>
+                <Button className="bg-success " onClick={handleToggle}>
+                  <Navbar.Text className="text-dark m-3 ">
+                    Favourite
+                  </Navbar.Text>
                   <span className="badge bg-danger">
                     {wishListData.counter}
                   </span>
