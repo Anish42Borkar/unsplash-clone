@@ -66,7 +66,7 @@ const Wishlist: FC = (): JSX.Element => {
     <div>
       {wishListData.list.length < 1 && (
         <div className="position-absolute top-50 start-50  translate-middle fs-1 fs-bold">
-          Wishlist is empty
+          Nothing to show...
         </div>
       )}
       <div className="mh-100">
