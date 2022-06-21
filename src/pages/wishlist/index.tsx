@@ -59,6 +59,7 @@ const Wishlist: FC = (): JSX.Element => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     setState((prev) => ({ ...prev, images: wishListData.list }));
   }, [wishListData.list]);
 
